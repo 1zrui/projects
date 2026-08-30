@@ -1,0 +1,9 @@
+{
+  "balance": 97.0,
+  "position": {
+    "qty": 4.631e-05,
+    "entry_price": 64783.75
+  },
+  "trades": 1,
+  "last_processed": "2026-08-19 02:00:00"
+}

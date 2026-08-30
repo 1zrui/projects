@@ -1,0 +1,23 @@
+[project]
+name = "quant-trader"
+version = "0.1.0"
+description = "个人量化回测平台（币安数据源 + nautilus_trader 事件驱动引擎）"
+requires-python = ">=3.12"
+dependencies = [
+    "nautilus_trader>=1.231.0",
+    "ccxt>=4.0.0",
+    "duckdb>=1.0.0",
+    "pandas>=2.0.0",
+    "numpy>=1.26.0",
+    "plotly>=5.20.0",
+    "pyyaml>=6.0",
+    "rich>=13.0.0",
+    "pysocks>=1.7.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["data", "strategies", "backtest", "analysis"]

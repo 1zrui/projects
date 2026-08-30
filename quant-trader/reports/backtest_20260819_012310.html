@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTC/USDT 1h 回测报告</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+       background: #0d1117; color: #c9d1d9; padding: 20px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.header { margin-bottom: 24px; }
+.header h1 { font-size: 1.6em; color: #f0f6fc; }
+.header .meta { color: #8b949e; font-size: 0.85em; margin-top: 4px; }
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 12px; margin-bottom: 24px; }
+.metric-card { background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+               padding: 14px; }
+.metric-card .label { font-size: 0.75em; color: #8b949e; text-transform: uppercase; }
+.metric-card .value { font-size: 1.4em; font-weight: 600; margin-top: 4px; }
+.metric-card .value.positive { color: #3fb950; }
+.metric-card .value.negative { color: #f85149; }
+.chart { background: #161b22; border: 1px solid #30363d; border-radius: 8px;
+         padding: 16px; margin-bottom: 16px; }
+.chart h3 { font-size: 0.9em; color: #8b949e; margin-bottom: 8px; }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #30363d; font-size: 0.85em; }
+th { color: #8b949e; font-weight: 500; }
+td { color: #c9d1d9; }
+tr:hover { background: #1c2128; }
+.section-title { font-size: 1.1em; color: #f0f6fc; margin: 20px 0 12px; }
+</style>
+</head>
+<body>
+<div class="container">
+<div class="header">
+  <h1>BTC/USDT 1h 回测报告</h1>
+  <div class="meta">
+    回测区间: 2024-01-01 ~ 2024-12-31 &nbsp;|&nbsp;
+    初始资金: $10000.0 &nbsp;|&nbsp;
+    数据量: 2000 根K线 &nbsp;|&nbsp;
+    生成时间: 2026-08-19 01:23
+  </div>
+</div>
+
+<div class="metrics-grid">
+  <div class="metric-card">
+    <div class="label">总收益率</div>
+    <div class="value negative">
+      N/A%
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="label">年化收益率</div>
+    <div class="value negative">
+      N/A%
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="label">夏普比率</div>
+    <div class="value negative">
+      N/A
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="label">最大回撤</div>
+    <div class="value negative">
+      -N/A%
+    </div>
+  </div>
+  <div class="metric-card">
+    <div class="label">总交易</div>
+    <div class="value">N/A</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">胜率</div>
+    <div class="value">N/A%</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">盈亏比</div>
+    <div class="value">N/A</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">最终权益</div>
+    <div class="value">$N/A</div>
+  </div>
+</div>
+
+<div class="chart"><p>无资金曲线数据</p></div>
+
+<div class="section-title">交易明细</div>
+<div class="chart">
+  <p>无数据</p>
+</div>
+
+<div class="section-title">成交记录</div>
+<div class="chart">
+  <div style="max-height:400px;overflow-y:auto;">
+<table><thead><tr><th>trader_id</th><th>strategy_id</th><th>instrument_id</th><th>venue_order_id</th><th>position_id</th><th>account_id</th><th>last_trade_id</th><th>type</th><th>side</th><th>quantity</th><th>time_in_force</th><th>is_reduce_only</th><th>is_quote_quantity</th><th>filled_qty</th><th>liquidity_side</th><th>avg_px</th><th>slippage</th><th>commissions</th><th>emulation_trigger</th><th>status</th><th>contingency_type</th><th>order_list_id</th><th>linked_order_ids</th><th>parent_order_id</th><th>exec_algorithm_id</th><th>exec_algorithm_params</th><th>exec_spawn_id</th><th>tags</th><th>init_id</th><th>ts_init</th><th>ts_last</th></tr></thead><tbody><tr><td>BACKTESTER-001</td><td>EMACross-000</td><td>BTCUSDT.BINANCE</td><td>BINANCE-1-001</td><td>BTCUSDT.BINANCE-EMACross-000</td><td>BINANCE-001</td><td>T-d36cbac7b9912ce0-081</td><td>MARKET</td><td>BUY</td><td>100.000000</td><td>GTC</td><td>False</td><td>False</td><td>52.000000</td><td>TAKER</td><td>39735.41</td><td>0.0</td><td>['2066.24132000 USDT']</td><td>NO_TRIGGER</td><td>PARTIALLY_FILLED</td><td>NO_CONTINGENCY</td><td>None</td><td>None</td><td>None</td><td>None</td><td>None</td><td>None</td><td>None</td><td>a0778392-8700-4227-829a-8767856c1610</td><td>2024-01-02 03:00:00+00:00</td><td>2024-01-02 03:00:00+00:00</td></tr></tbody></table>
+<p style="color:#8b949e;font-size:0.8em;margin-top:8px;">
+共 1 行
+</p></div>
+</div>
+
+</div>
+</body>
+</html>

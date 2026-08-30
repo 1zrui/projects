@@ -1,0 +1,36 @@
+# ============================================================
+# quant-trader 全局配置
+# ============================================================
+
+# ---------- 数据源 ----------
+exchange:
+  name: binance          # 交易所
+  type: spot             # spot / futures
+  rate_limit: 1200       # 请求数/分钟（币安现货限制）
+  proxy: socks5://127.0.0.1:10808   # 代理地址
+
+# ---------- 数据存储 ----------
+store:
+  backend: duckdb
+  path: data/market_data.duckdb   # 数据库路径（相对项目根目录）
+  parquet_dir: data/parquet/       # Parquet 备份目录
+
+# ---------- 回测配置 ----------
+backtest:
+  start: "2024-01-01"
+  end: null                    # null = 跑到数据库最新数据
+  initial_capital: 100.0        # USDT
+  commission: 0.001               # 0.1% 手续费
+  slippage: 0.0005                # 0.05% 滑点模拟
+
+# ---------- 交易对配置 ----------
+symbols:
+  - BTC/USDT
+  - ETH/USDT
+  - SOL/USDT
+  - BNB/USDT
+  - DOGE/USDT
+
+# ---------- 时间粒度 ----------
+timeframes:
+  - 1h
