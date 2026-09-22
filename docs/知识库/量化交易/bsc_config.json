@@ -1,0 +1,13 @@
+{
+  "interval_sec": 180,
+  "max_watch": 80,
+  "min_liq_usd": 3000,
+  "pump_pct_5m": 15,
+  "dump_pct_5m": -15,
+  "pump_pct_1h": 50,
+  "liq_drop_pct": 20,
+  "vol_spike_ratio": 3.0,
+  "event_cooldown_sec": 300,
+  "gecko_pages": 5,
+  "hot_keywords": ["dog","cat","pepe","frog","meme","cz","binance","fly","果蝇","币安","人生","broccoli","西兰花","moon","elon","ai"]
+}
