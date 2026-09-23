@@ -1,0 +1,24 @@
+[Unit]
+Description=BlockBeats (律动) 快讯实时推送 → QQ群
+Documentation=file:///opt/blockbeats-push/README.md
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# 改成你的安装目录（install.sh 会按实际路径替换）
+WorkingDirectory=/opt/blockbeats-push
+EnvironmentFile=/opt/blockbeats-push/.env
+ExecStart=/opt/blockbeats-push/.venv/bin/python -u /opt/blockbeats-push/blockbeats_listener.py
+Restart=always
+RestartSec=5
+# 脚本自身也会写 logs/listener.log；journald 里再留一份，方便 journalctl -u 直接看
+StandardOutput=journal
+StandardError=journal
+# 一般用 root 跑（需要读 .env、写 state/cache）。要降权就改成专用用户并 chown 整个目录
+User=root
+# 防护：不给它写系统目录之外的东西也没必要限制，这里只做基本收敛
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

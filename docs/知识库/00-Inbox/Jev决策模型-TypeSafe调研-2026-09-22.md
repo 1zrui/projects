@@ -131,6 +131,52 @@ transcript 写入准入检查、`compression_locks`、水位线提交、`session
 引用过的示例文本也算进去（出现多个相同的假数字）。必须加 `role='tool'`
 且用前缀匹配 `content LIKE '[Jev 判定为噪音%'`。
 
+### ⚠️⚠️ 第三次修复（最关键）：钩子挂错了位置，Jev 根本没被调用（2026-09-23）
+
+上线后 Jev 一次都没跑过。日志真相：
+
+```
+14:26:06  context compression started: messages=280 tokens=~317,642
+14:26:06  Pre-compression: pruned 124 old tool result(s)
+14:26:06  Context compression triggered (317642 >= 300000 threshold)
+14:27:55  Compressed: 280 -> 29 messages (~128,822 tokens saved, 83%)
+```
+
+**根因：`agent/turn_preflight.py` 的压缩分支结构**
+
+```python
+if (agent.compression_enabled
+    and compression_attempts < max_compression_attempts
+    and _compressor.should_compress(_real_tokens)):     # ← True 就直接压缩
+    ...走完整压缩（LLM 摘要）...
+elif agent.compression_enabled:                          # ← 只有上面 False 才轮到
+    _prune(messages, current_tokens=_real_tokens)        # ← prune_tool_results_only
+```
+
+推论（三条都实测过）：
+1. **`prune_tool_results_only` 只在 `should_compress()` 返回 False 时才被调用。**
+   本插件自己定的 `jev_trigger_ratio` 阈值 host 根本不读 —— 光调低它没有任何作用。
+2. **要让 Jev 上场，必须重写 `should_compress_info()`**：在"Jev 还能剪"时返回
+   `(False, "jev_prune_first")`，把 host 让进 `elif` 分支。这是唯一正确的钩子位置。
+3. **`proactive_prune_tokens <= 0` 会让内置剪枝第一句就 return**（no-op）。
+   本插件是 super() 之后再叠 Jev，所以那层失效不影响自己，但别指望内置兜底。
+
+**兜底设计（防 Jev 无限推迟压缩把上下文顶爆窗口）**
+- `_jev_dry`：上一轮 Jev 一条都没剪动 → 下次放行压缩。**放行时必须置回 False**，
+  否则走 `if` 分支后再没人重置它，之后每轮都直接压缩、Jev 永远失业。
+- `_jev_dry` **只在"真的跑过判定"时更新**：上下文没到触发线时 Jev 压根没跑，
+  这时置 dry 会让下次刚超阈值就直奔压缩（`_jev_prune` 因此返回 `(msgs, dropped, ran)`）。
+- `jev_hard_ratio = 1.15`：prompt ≥ 阈值×1.15 直接放行压缩（阈值 30 万 → 34.5 万）。
+
+**验证矩阵（全部实测通过）**
+```
+prompt= 50,000 → 压缩=False (super 本就不该压)   Jev 未跑, _jev_dry 未被污染
+prompt=200,000 → 压缩=False (super)              剪 13 条
+prompt=330,000 → 压缩=False jev_prune_first      ← 推迟给 Jev
+prompt=360,000 → 压缩=True                       ← 硬保护放行
+同内容再跑     → 0.008s（缓存命中）
+```
+
 ## 交付物：CLI 工具 + Hermes 插件（2026-09-22）
 
 路径 `~/workspace/jev/`：

@@ -1,0 +1,9 @@
+# 密钥与运行时产物 —— 绝不进 git
+.env
+state/
+cache/
+logs/
+.venv/
+__pycache__/
+*.pyc
+*.png
