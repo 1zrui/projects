@@ -34,6 +34,12 @@ projects/
 - data/*.csv、data/*.json
 - .env、*.log、.DS_Store
 
+## 知识库备份路径（重要）
+
+- 知识库本体 `/home/ubuntu/workspace/知识库` 是**独立 git 仓库，没有配置 remote**，巡检只做本地 commit
+- 真正的远程推送：`rsync -a --delete --exclude='.git' /home/ubuntu/workspace/知识库/ /home/ubuntu/workspace/projects/docs/知识库/` 后，在 projects 仓库 commit + push（token 已内嵌在 remote URL）
+- 2026-09-25 巡检确认此机制可用；别再给知识库本体配 remote
+
 ## 操作命令
 
 ```bash
